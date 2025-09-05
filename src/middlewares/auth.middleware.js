@@ -1,7 +1,8 @@
-const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const userModel = require("../models/user.model");
 
-async function authMiddleware(req, res, next) {
+async function authMiddlewre(req, res, next) {
   const { token } = req.cookies;
 
   if (!token) {
@@ -17,13 +18,10 @@ async function authMiddleware(req, res, next) {
       _id: decoded.id,
     });
 
-    req.user = user;
-    next();
+    (req.user = user), next();
   } catch (error) {
-    return res.status(401).json({
-      message: "Unauthorized, invalid token",
-    });
+    console.log(error);
   }
 }
 
-module.exports = authMiddleware;
+module.exports = authMiddlewre;
